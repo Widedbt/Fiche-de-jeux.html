@@ -1,0 +1,731 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Cartes Alif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Concept : cahier d'école bleu nuit. Un bandeau de leçons, une grande carte qui se retourne, puis trois jeux.
+   Chaque phase du programme a sa couleur (turquoise, violet, corail, or). */
+:root {
+  --bg: #EEF3FA;
+  --surface: #FFFFFF;
+  --surface-2: #E3EBF6;
+  --ink: #14213D;
+  --ink-soft: #4A5878;
+  --line: #CBD7EA;
+  --good: #1E9E6A;
+  --bad: #D6455D;
+  --teal: #12A4A0;   --teal-soft: #D5F1EF;
+  --violet: #7A5CE0; --violet-soft: #E6E0FA;
+  --coral: #EE5A4F;  --coral-soft: #FCE0DC;
+  --gold: #E7A400;   --gold-soft: #FBEFC8;
+  --phase: var(--teal);
+  --phase-soft: var(--teal-soft);
+  --on-phase: #FFFFFF;
+  --shadow: 0 6px 0 rgba(20, 33, 61, .12);
+  --f-display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --f-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-ar: "Scheherazade New", "Noto Naskh Arabic", "Amiri", "Geeza Pro", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1630; --surface: #18244A; --surface-2: #213059; --ink: #EEF2FF; --ink-soft: #A9B6D8; --line: #2D3C69;
+    --good: #43D39A; --bad: #FF7A8E;
+    --teal: #3CCFC9; --teal-soft: #17433F; --violet: #A58EFF; --violet-soft: #2E2760;
+    --coral: #FF8277; --coral-soft: #522A2D; --gold: #FFC83D; --gold-soft: #4A3A0E;
+    --on-phase: #0E1630; --shadow: 0 6px 0 rgba(0, 0, 0, .35); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1630; --surface: #18244A; --surface-2: #213059; --ink: #EEF2FF; --ink-soft: #A9B6D8; --line: #2D3C69;
+  --good: #43D39A; --bad: #FF7A8E;
+  --teal: #3CCFC9; --teal-soft: #17433F; --violet: #A58EFF; --violet-soft: #2E2760;
+  --coral: #FF8277; --coral-soft: #522A2D; --gold: #FFC83D; --gold-soft: #4A3A0E;
+  --on-phase: #0E1630; --shadow: 0 6px 0 rgba(0, 0, 0, .35); color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5; padding-inline: 16px; padding-block: 16px 48px; }
+* { box-sizing: border-box; }
+.wrap { max-width: 880px; margin-inline: auto; display: flex; flex-direction: column; gap: 20px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--phase); outline-offset: 2px; }
+.ar { font-family: var(--f-ar); direction: rtl; unicode-bidi: isolate; }
+
+/* En-tête */
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand-mark { font-family: var(--f-ar); font-size: 2.6rem; line-height: 1; background: var(--phase); color: var(--on-phase); width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; box-shadow: var(--shadow); }
+.brand h1 { font-family: var(--f-display); font-size: 1.7rem; line-height: 1.1; margin: 0; }
+.brand p { margin: 0; color: var(--ink-soft); font-size: .9rem; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { border: 2px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: .9rem; }
+.pill[aria-pressed="true"] { background: var(--phase); border-color: var(--phase); color: var(--on-phase); }
+
+/* Bandeau de leçons */
+.lessons { display: flex; gap: 8px; overflow-x: auto; padding-block: 4px 10px; scroll-snap-type: x proximity; }
+.lesson-chip { flex: 0 0 auto; scroll-snap-align: start; min-width: 64px; border: 2px solid var(--line); background: var(--surface); border-radius: 16px; padding: 6px 10px 8px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+.lesson-chip b { font-family: var(--f-display); font-size: 1.3rem; line-height: 1.1; }
+.lesson-chip span { font-size: .75rem; letter-spacing: .02em; color: var(--ink-soft); }
+.lesson-chip[aria-current="true"] { background: var(--phase-soft); border-color: var(--phase); }
+.lesson-chip[data-phase="1"] b { color: var(--teal); } .lesson-chip[data-phase="2"] b { color: var(--violet); }
+.lesson-chip[data-phase="3"] b { color: var(--coral); } .lesson-chip[data-phase="4"] b { color: var(--gold); }
+
+/* Titre de leçon */
+.head { display: flex; flex-direction: column; gap: 4px; }
+.eyebrow { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 800; color: var(--phase); }
+.head h2 { font-family: var(--f-display); font-size: clamp(1.6rem, 5vw, 2.2rem); line-height: 1.1; margin: 0; text-wrap: balance; }
+.head p { margin: 0; color: var(--ink-soft); max-width: 62ch; }
+
+.tabs { display: flex; gap: 8px; }
+.tab { flex: 1; border: 2px solid var(--line); background: var(--surface); border-radius: 14px; padding: 10px; font-family: var(--f-display); font-size: 1.1rem; font-weight: 700; }
+.tab[aria-selected="true"] { background: var(--phase); border-color: var(--phase); color: var(--on-phase); box-shadow: var(--shadow); }
+
+/* Carte à retourner */
+.deck { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.scene { width: 100%; max-width: 480px; perspective: 1200px; }
+.card { position: relative; width: 100%; aspect-ratio: 4 / 3; transition: transform .55s cubic-bezier(.3, .7, .3, 1); transform-style: preserve-3d; border: 0; background: none; padding: 0; }
+.card[data-flipped="true"] { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 28px; border: 3px solid var(--phase); background: var(--surface); box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 16px; text-align: center; overflow: hidden; }
+.face.back { transform: rotateY(180deg); background: var(--phase-soft); }
+.face .big { font-size: clamp(3.2rem, 17vw, 6.4rem); line-height: 1.25; max-width: 100%; }
+.face .big.long { font-size: clamp(1.9rem, 8vw, 3.2rem); line-height: 1.5; }
+.face .hint { position: absolute; bottom: 10px; font-size: .8rem; color: var(--ink-soft); }
+.face .pic { font-size: clamp(3.6rem, 16vw, 5.6rem); line-height: 1.1; }
+.face .tr { font-family: var(--f-display); font-size: 1.3rem; font-weight: 700; color: var(--phase); }
+.face .fr { font-size: 1.05rem; max-width: 30ch; }
+.face .ar-small { font-size: 1.8rem; color: var(--ink-soft); }
+.nav { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.btn { border: 2px solid var(--line); background: var(--surface); border-radius: 14px; padding: 10px 16px; font-weight: 800; min-height: 46px; }
+.btn.primary { background: var(--phase); border-color: var(--phase); color: var(--on-phase); box-shadow: var(--shadow); }
+.btn.ok { background: var(--good); border-color: var(--good); color: #fff; }
+.btn.retry { border-color: var(--coral); color: var(--coral); }
+.btn:disabled { opacity: .45; cursor: default; }
+.counter { font-variant-numeric: tabular-nums; font-weight: 800; min-width: 5.5ch; text-align: center; }
+.dots { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 480px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; background: var(--line); border: 0; padding: 0; }
+.dot[data-known="true"] { background: var(--good); }
+.dot[aria-current="true"] { outline: 3px solid var(--phase); outline-offset: 2px; }
+
+/* Grille de toutes les cartes */
+.grid-title { font-family: var(--f-display); font-size: 1.15rem; margin: 6px 0 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 10px; }
+.mini { border: 2px solid var(--line); border-radius: 16px; background: var(--surface); padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 0; min-width: 0; }
+.mini .ar { font-size: 1.7rem; line-height: 1.4; max-width: 100%; overflow-wrap: anywhere; }
+.mini .ar.long { font-size: 1.15rem; }
+.mini span.p { font-size: 1.5rem; }
+.mini small { color: var(--ink-soft); font-size: .75rem; max-width: 100%; overflow-wrap: anywhere; text-align: center; }
+.mini[data-known="true"] { border-color: var(--good); }
+
+/* Jeux */
+.games { display: grid; gap: 16px; }
+.game { background: var(--surface); border: 2px solid var(--line); border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.game h3 { font-family: var(--f-display); font-size: 1.35rem; margin: 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.game .how { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+.stars { letter-spacing: 2px; color: var(--gold); font-size: 1.1rem; }
+.stage { display: flex; flex-direction: column; gap: 12px; align-items: center; min-width: 0; }
+.prompt { font-size: clamp(2.6rem, 14vw, 4.6rem); line-height: 1.3; text-align: center; max-width: 100%; }
+.prompt.pic { font-size: clamp(3.6rem, 16vw, 5.4rem); }
+.prompt.long { font-size: clamp(1.7rem, 7vw, 2.6rem); }
+.prompt-label { color: var(--ink-soft); font-weight: 700; text-align: center; }
+.choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.choice { border: 2px solid var(--line); background: var(--surface-2); border-radius: 16px; padding: 12px 8px; min-height: 64px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; text-align: center; overflow-wrap: anywhere; min-width: 0; }
+.choice .ar { font-size: 1.7rem; line-height: 1.4; }
+.choice .pic { font-size: 2rem; }
+.choice.right { background: var(--good); border-color: var(--good); color: #fff; }
+.choice.wrong { background: var(--bad); border-color: var(--bad); color: #fff; }
+.meter { width: 100%; height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--phase); transition: width .3s; }
+.msg { font-weight: 800; min-height: 1.5em; text-align: center; }
+.msg.good { color: var(--good); } .msg.bad { color: var(--bad); }
+.result { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.result .score { font-family: var(--f-display); font-size: 2.4rem; font-weight: 800; line-height: 1.1; }
+
+/* Mémoire */
+.memo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; width: 100%; }
+.tile { aspect-ratio: 1 / 1; border: 2px solid var(--phase); border-radius: 14px; background: var(--phase); color: var(--on-phase); display: grid; place-items: center; font-size: 1.6rem; font-weight: 800; padding: 2px; overflow: hidden; min-width: 0; }
+.tile.open { background: var(--surface); color: var(--ink); }
+.tile.done { background: var(--good-soft, var(--phase-soft)); border-color: var(--good); color: var(--ink); }
+.tile .ar { font-size: 1.5rem; line-height: 1.3; }
+.tile .ar.long { font-size: .95rem; }
+.tile .pic { font-size: 2rem; }
+@media (max-width: 420px) { .memo { gap: 6px; } .tile .ar { font-size: 1.25rem; } }
+
+/* Lis vite */
+.timer { font-family: var(--f-display); font-size: 2.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+/* Jeu sans écran */
+.offline { background: var(--phase-soft); border: 2px dashed var(--phase); border-radius: 24px; padding: 18px; }
+.offline h3 { font-family: var(--f-display); margin: 0 0 4px; font-size: 1.25rem; }
+.offline p { margin: 0; max-width: 62ch; }
+.foot { text-align: center; color: var(--ink-soft); font-size: .85rem; }
+
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } .meter i { transition: none; } }
+@media (min-width: 760px) { .games { grid-template-columns: repeat(2, minmax(0, 1fr)); } .game.wide { grid-column: 1 / -1; } }
+#app[data-phase="1"] { --phase: var(--teal); --phase-soft: var(--teal-soft); }
+#app[data-phase="2"] { --phase: var(--violet); --phase-soft: var(--violet-soft); }
+#app[data-phase="3"] { --phase: var(--coral); --phase-soft: var(--coral-soft); }
+#app[data-phase="4"] { --phase: var(--gold); --phase-soft: var(--gold-soft); --on-phase: #14213D; }
+.stars-total { font-weight: 800; color: var(--ink-soft); display: flex; align-items: center; gap: 6px; padding: 6px 4px; }
+.stars-total b { color: var(--gold); font-size: 1.1rem; }
+</style>
+<div class="wrap" id="app" data-phase="1">
+  <header class="top">
+    <div class="brand">
+      <div class="brand-mark ar" aria-hidden="true">أ</div>
+      <div><h1>Cartes Alif</h1><p>L'arabe en cartes et en jeux, leçon par leçon</p></div>
+    </div>
+    <div class="tools">
+      <button class="pill" id="older" data-act="older" aria-pressed="false">Piste 13 ans</button>
+      <span class="stars-total" title="Étoiles gagnées dans les jeux"><b>★</b><span id="total">0 / 108</span></span>
+    </div>
+  </header>
+  <nav class="lessons" id="chips" aria-label="Choisir une leçon"></nav>
+  <div class="head" id="head"></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tab-cards" role="tab" data-act="tab" data-mode="cards" aria-selected="true">Cartes</button>
+    <button class="tab" id="tab-games" role="tab" data-act="tab" data-mode="games" aria-selected="false">Jeux</button>
+  </div>
+  <main id="main"></main>
+  <p class="foot">La « Piste 13 ans » ajoute les mots bonus de chaque leçon. Les étoiles et les cartes connues sont gardées sur cet appareil.</p>
+</div>
+<script>
+/* Données des 12 leçons. Carte : ar = arabe, tr = lecture, fr = sens, img = image, q = libellé court pour les quiz, k = type */
+const c = (ar, tr, fr, img, extra) => Object.assign({ ar, tr, fr, img, q: fr, k: "word" }, extra || {});
+const L = (ar, tr, name, word, wordFr, img) =>
+  ({ ar, tr, fr: "Lettre " + name + ", comme dans " + word + " (" + wordFr + ")", img, q: name, k: "let", word });
+
+const LESSONS = [
+  {
+    n: 1, phase: 1, title: "Les 28 lettres et la fatha",
+    goal: "Reconnaître le nom et le son des 28 lettres, puis lire les premiers mots de 3 lettres.",
+    cards: [
+      L("أ", "alif", "alif", "أَرْنَب", "lapin", "🐰"),
+      L("ب", "ba", "ba", "بَيْت", "maison", "🏠"),
+      L("ت", "ta", "ta", "تُفَّاح", "pomme", "🍎"),
+      L("ث", "tha (th anglais)", "tha", "ثَعْلَب", "renard", "🦊"),
+      L("ج", "jim", "jim", "جَمَل", "chameau", "🐪"),
+      L("ح", "ḥa (h soufflé)", "ḥa", "حِصَان", "cheval", "🐴"),
+      L("خ", "kha (r de « rue » gratté)", "kha", "خَرُوف", "mouton", "🐑"),
+      L("د", "dal", "dal", "دُب", "ours", "🐻"),
+      L("ذ", "dhal (th de « this »)", "dhal", "ذُرَة", "maïs", "🌽"),
+      L("ر", "ra (r roulé)", "ra", "رِيشَة", "plume", "🪶"),
+      L("ز", "zay", "zay", "زَهْرَة", "fleur", "🌸"),
+      L("س", "sin", "sin", "سَمَكَة", "poisson", "🐟"),
+      L("ش", "shin (ch)", "shin", "شَمْس", "soleil", "☀️"),
+      L("ص", "ṣad (s lourd)", "ṣad", "صَقْر", "faucon", "🦅"),
+      L("ض", "ḍad (d lourd)", "ḍad", "ضِفْدَع", "grenouille", "🐸"),
+      L("ط", "ṭa (t lourd)", "ṭa", "طَائِرَة", "avion", "✈️"),
+      L("ظ", "ẓa (th lourd)", "ẓa", "ظَرْف", "enveloppe", "✉️"),
+      L("ع", "ʿayn (son de gorge)", "ʿayn", "عُصْفُور", "oiseau", "🐦"),
+      L("غ", "ghayn (r de gorge)", "ghayn", "غَيْمَة", "nuage", "☁️"),
+      L("ف", "fa", "fa", "فِيل", "éléphant", "🐘"),
+      L("ق", "qaf (k du fond de la gorge)", "qaf", "قَمَر", "lune", "🌙"),
+      L("ك", "kaf", "kaf", "كِتَاب", "livre", "📖"),
+      L("ل", "lam", "lam", "لَيْمُون", "citron", "🍋"),
+      L("م", "mim", "mim", "مَوْز", "banane", "🍌"),
+      L("ن", "nun", "nun", "نَحْلَة", "abeille", "🐝"),
+      L("ه", "ha (h léger)", "ha", "هَاتِف", "téléphone", "📱"),
+      L("و", "waw", "waw", "وَرْدَة", "rose", "🌹"),
+      L("ي", "ya", "ya", "يَد", "main", "✋"),
+      c("جَمَل", "jamal", "chameau", "🐪"),
+      c("قَمَر", "qamar", "lune", "🌙"),
+      c("وَلَد", "walad", "garçon", "👦"),
+      c("سَمَك", "samak", "poisson", "🐟")
+    ],
+    bonus: [
+      c("كَتَبَ", "kataba", "il a écrit", "✍️"),
+      c("دَرَسَ", "darasa", "il a étudié", "📚"),
+      c("جَلَسَ", "jalasa", "il s'est assis", "🪑"),
+      c("فَتَحَ", "fataḥa", "il a ouvert", "🔓")
+    ],
+    play: "Chasse aux lettres : le parent dit une lettre, l'élève la repère dans la maison (emballage, livre, affiche) en 2 minutes. Un point par lettre trouvée."
+  },
+  {
+    n: 2, phase: 1, title: "Damma et kasra",
+    goal: "Lire les trois voyelles courtes : a, ou, i.",
+    cards: [
+      c("بَ", "ba", "a (fatha) : bouche ouverte", "😮", { q: "ba", k: "syl" }),
+      c("بُ", "bou", "ou (damma) : lèvres en rond", "😗", { q: "bou", k: "syl" }),
+      c("بِ", "bi", "i (kasra) : grand sourire", "😁", { q: "bi", k: "syl" }),
+      c("كُرَة", "kura", "balle", "🏀"),
+      c("عِنَب", "ʿinab", "raisin", "🍇"),
+      c("وَرَد", "warad", "rose", "🌹"),
+      c("سَمَك", "samak", "poisson", "🐟"),
+      c("قَلَم", "qalam", "stylo", "✏️")
+    ],
+    bonus: [],
+    play: "Les trois visages : bouche ouverte pour a, lèvres rondes pour ou, grand sourire pour i. Le parent montre une syllabe, l'élève fait la bonne bouche et la lit."
+  },
+  {
+    n: 3, phase: 1, title: "Le soukoun",
+    goal: "Lire une lettre sans voyelle et lire des mots comme بَيْت et شَمْس.",
+    cards: [
+      c("بَيْت", "bayt", "maison", "🏠"),
+      c("كَلْب", "kalb", "chien", "🐶"),
+      c("شَمْس", "shams", "soleil", "☀️"),
+      c("نَهْر", "nahr", "rivière", "🏞️"),
+      c("دَرْس", "dars", "leçon", "📚"),
+      c("قِرْد", "qird", "singe", "🐒")
+    ],
+    bonus: [
+      c("بَحْر", "baḥr", "mer", "🌊"),
+      c("ثَلْج", "thalj", "neige", "❄️")
+    ],
+    play: "Le poing du soukoun : le parent lit un mot, l'élève ferme le poing quand il entend la lettre qui s'arrête (sans voyelle), et ouvre la main sur les autres."
+  },
+  {
+    n: 4, phase: 2, title: "Les voyelles longues",
+    goal: "Faire la différence entre voyelle courte et voyelle longue : بَ / بَا.",
+    cards: [
+      c("بَا", "baa", "a long (alif)", "📏", { q: "baa", k: "syl" }),
+      c("بُو", "bouu", "ou long (waw)", "📏", { q: "bouu", k: "syl" }),
+      c("بِي", "bii", "i long (ya)", "📏", { q: "bii", k: "syl" }),
+      c("بَاب", "baab", "porte", "🚪"),
+      c("نُور", "nour", "lumière", "💡"),
+      c("فِيل", "fiil", "éléphant", "🐘"),
+      c("كِتَاب", "kitaab", "livre", "📖"),
+      c("سُوق", "souq", "marché", "🛒")
+    ],
+    bonus: [
+      c("قَارِب", "qaarib", "bateau", "⛵"),
+      c("طَيْر", "ṭayr", "oiseau", "🕊️")
+    ],
+    play: "Petit pas, grand pas : voyelle courte = un petit pas, voyelle longue = un grand pas. Le parent lit, l'élève avance du bon pas."
+  },
+  {
+    n: 5, phase: 2, title: "Les lettres dans le mot",
+    goal: "Reconnaître le début, le milieu et la fin d'une lettre, et les lettres qui ne se lient pas.",
+    cards: [
+      c("بـ ـبـ ـب", "début · milieu · fin", "la lettre ب change de forme", "🔗", { q: "formes de ب", k: "syl" }),
+      c("نـ ـنـ ـن", "début · milieu · fin", "la lettre ن change de forme", "🔗", { q: "formes de ن", k: "syl" }),
+      c("ا د ذ ر ز و", "six lettres", "ces lettres ne se lient pas à la suivante", "✂️", { q: "lettres qui ne se lient pas", k: "syl" }),
+      c("مَكْتَب", "maktab", "bureau", "🗂️"),
+      c("مَطْبَخ", "maṭbakh", "cuisine", "🍳"),
+      c("مَدْرَسَة", "madrasa", "école", "🏫"),
+      c("دَار", "daar", "maison", "🏡"),
+      c("رَأْس", "raʾs", "tête", "🧑")
+    ],
+    bonus: [
+      c("مَطَر", "maṭar", "pluie", "🌧️"),
+      c("مِفْتَاح", "miftaaḥ", "clé", "🔑")
+    ],
+    play: "Puzzle de lettres : découpe des cartes avec les formes d'une lettre, mélange-les, l'élève reconstitue le mot en les collant dans le bon ordre."
+  },
+  {
+    n: 6, phase: 2, title: "Ta marbouta et couleurs",
+    goal: "Lire la lettre ة, le féminin et les six couleurs.",
+    cards: [
+      c("مَدْرَسَة", "madrasa", "école", "🏫"),
+      c("حَدِيقَة", "ḥadiiqa", "jardin", "🌳"),
+      c("غُرْفَة", "ghurfa", "chambre", "🛏️"),
+      c("زَهْرَة", "zahra", "fleur", "🌸"),
+      c("سَاعَة", "saaʿa", "horloge", "⏰"),
+      c("أَحْمَر", "aḥmar", "rouge", "🔴"),
+      c("أَزْرَق", "azraq", "bleu", "🔵"),
+      c("أَخْضَر", "akhḍar", "vert", "🟢"),
+      c("أَصْفَر", "aṣfar", "jaune", "🟡"),
+      c("أَبْيَض", "abyaḍ", "blanc", "⚪"),
+      c("أَسْوَد", "aswad", "noir", "⚫")
+    ],
+    bonus: [
+      c("بُرْتُقَالِي", "burtuqaalii", "orange", "🟠"),
+      c("بَنَفْسَجِي", "banafsajii", "violet", "🟣")
+    ],
+    play: "Lis et colorie : écris un nom de couleur, l'élève colorie le dessin avec la bonne couleur. Un point par couleur juste."
+  },
+  {
+    n: 7, phase: 3, title: "Tanwin et chadda",
+    goal: "Lire les doubles voyelles (ـً ـٌ ـٍ), la lettre doublée (ـّ) et les formules de politesse.",
+    cards: [
+      c("مَرْحَبًا", "marḥaban", "bonjour", "👋"),
+      c("شُكْرًا", "shukran", "merci", "🙏"),
+      c("صَبَاحَ الْخَيْر", "ṣabaaḥ al-khayr", "bon matin", "🌅"),
+      c("جَدّ", "jadd", "grand-père", "👴"),
+      c("أُمّ", "umm", "mère", "👩"),
+      c("مُعَلِّم", "muʿallim", "enseignant", "👨‍🏫"),
+      c("سَيَّارَة", "sayyaara", "voiture", "🚗")
+    ],
+    bonus: [
+      c("كِتَابٌ", "kitaabun", "un livre", "📕"),
+      c("جَدَّة", "jadda", "grand-mère", "👵")
+    ],
+    play: "Jeu de rôle du marché : un élève est le marchand, l'autre le client. On se dit مَرْحَبًا, on « achète » des objets imaginaires et on termine par شُكْرًا."
+  },
+  {
+    n: 8, phase: 3, title: "L'article ال",
+    goal: "Lire الـ et savoir si le « l » se prononce (lettre lunaire) ou disparaît (lettre solaire).",
+    cards: [
+      c("الْقَمَر", "al-qamar", "la lune (lettre lunaire)", "🌙", { q: "la lune" }),
+      c("الْبَيْت", "al-bayt", "la maison (lettre lunaire)", "🏠", { q: "la maison" }),
+      c("الْكِتَاب", "al-kitaab", "le livre (lettre lunaire)", "📖", { q: "le livre" }),
+      c("الشَّمْس", "ash-shams", "le soleil (lettre solaire)", "☀️", { q: "le soleil" }),
+      c("الشَّجَرَة", "ash-shajara", "l'arbre (lettre solaire)", "🌳", { q: "l'arbre" }),
+      c("النَّهْر", "an-nahr", "la rivière (lettre solaire)", "🏞️", { q: "la rivière" })
+    ],
+    bonus: [
+      c("الْقَلَم", "al-qalam", "le stylo (lettre lunaire)", "✏️", { q: "le stylo" }),
+      c("الدَّرْس", "ad-dars", "la leçon (lettre solaire)", "📚", { q: "la leçon" })
+    ],
+    play: "Soleil ou lune ? Le parent lit un mot : mains en l'air pour une lettre solaire (le l disparaît), mains en bas pour une lettre lunaire (le l reste)."
+  },
+  {
+    n: 9, phase: 3, title: "La hamza et les animaux",
+    goal: "Lire les mots avec hamza et le nom de sept animaux.",
+    cards: [
+      c("أَسَد", "asad", "lion", "🦁"),
+      c("أَرْنَب", "arnab", "lapin", "🐰"),
+      c("حِصَان", "ḥiṣaan", "cheval", "🐴"),
+      c("عُصْفُور", "ʿuṣfuur", "oiseau", "🐦"),
+      c("قِطَّة", "qiṭṭa", "chat", "🐱"),
+      c("سَمَكَة", "samaka", "poisson", "🐟"),
+      c("مَاء", "maaʾ", "eau", "💧"),
+      c("سَمَاء", "samaaʾ", "ciel", "🌤️")
+    ],
+    bonus: [
+      c("فَرَاشَة", "farasha", "papillon", "🦋"),
+      c("دُلْفِين", "dulfiin", "dauphin", "🐬")
+    ],
+    play: "Le zoo arabe : le parent lit le nom d'un animal, l'élève l'imite (cri, démarche). Puis on inverse les rôles."
+  },
+  {
+    n: 10, phase: 4, title: "Les premières phrases",
+    goal: "Lire هَذَا / هَذِهِ, les pronoms, poser une question et compter jusqu'à 5.",
+    cards: [
+      c("هَذَا بَيْت", "haadhaa bayt", "Ceci est une maison", "🏠", { q: "Ceci est une maison", k: "sen" }),
+      c("هَذِهِ مَدْرَسَة", "haadhihi madrasa", "Ceci est une école", "🏫", { q: "Ceci est une école", k: "sen" }),
+      c("أَنَا وَلَد", "ana walad", "Je suis un garçon", "👦", { q: "Je suis un garçon", k: "sen" }),
+      c("هِيَ أُمّ", "hiya umm", "Elle est une maman", "👩", { q: "Elle est une maman", k: "sen" }),
+      c("مَا هَذَا؟", "maa haadhaa ?", "Qu'est-ce que c'est ?", "❓", { q: "Qu'est-ce que c'est ?", k: "sen" }),
+      c("أَيْنَ الْكِتَاب؟", "ayna al-kitaab ?", "Où est le livre ?", "🔎", { q: "Où est le livre ?", k: "sen" }),
+      c("وَاحِد", "waaḥid", "un", "1️⃣", { q: "1", k: "num" }),
+      c("اِثْنَان", "ithnaan", "deux", "2️⃣", { q: "2", k: "num" }),
+      c("ثَلَاثَة", "thalaatha", "trois", "3️⃣", { q: "3", k: "num" }),
+      c("أَرْبَعَة", "arbaʿa", "quatre", "4️⃣", { q: "4", k: "num" }),
+      c("خَمْسَة", "khamsa", "cinq", "5️⃣", { q: "5", k: "num" })
+    ],
+    bonus: [
+      c("سِتَّة", "sitta", "six", "6️⃣", { q: "6", k: "num" }),
+      c("سَبْعَة", "sabʿa", "sept", "7️⃣", { q: "7", k: "num" }),
+      c("ثَمَانِيَة", "thamaaniya", "huit", "8️⃣", { q: "8", k: "num" }),
+      c("تِسْعَة", "tisʿa", "neuf", "9️⃣", { q: "9", k: "num" }),
+      c("عَشَرَة", "ʿashara", "dix", "🔟", { q: "10", k: "num" })
+    ],
+    play: "Où est-il ? Le parent cache un objet (crayon, livre). L'élève pose la question en arabe, par exemple أَيْنَ الْقَلَم؟, et cherche. Un point par objet trouvé."
+  },
+  {
+    n: 11, phase: 4, title: "Verbes et petits textes",
+    goal: "Lire des phrases avec verbe et sujet, puis un texte de trois phrases.",
+    cards: [
+      c("كَتَبَ الْوَلَدُ الدَّرْسَ", "kataba al-waladu ad-darsa", "Le garçon a écrit la leçon", "✍️", { q: "Le garçon a écrit la leçon", k: "sen" }),
+      c("فَتَحَ الْأَبُ الْبَابَ", "fataḥa al-abu al-baaba", "Le père a ouvert la porte", "🚪", { q: "Le père a ouvert la porte", k: "sen" }),
+      c("جَلَسَتِ الْبِنْتُ", "jalasati al-bintu", "La fille s'est assise", "🪑", { q: "La fille s'est assise", k: "sen" }),
+      c("كَتَبَ", "kataba", "il a écrit", "✍️", { q: "il a écrit" }),
+      c("دَرَسَ", "darasa", "il a étudié", "📚", { q: "il a étudié" }),
+      c("جَلَسَ", "jalasa", "il s'est assis", "🪑", { q: "il s'est assis" }),
+      c("فَتَحَ", "fataḥa", "il a ouvert", "🔓", { q: "il a ouvert" })
+    ],
+    bonus: [
+      c("ذَهَبَ الْوَلَدُ إِلَى الْمَدْرَسَةِ", "dhahaba al-waladu ilaa al-madrasati", "Le garçon est allé à l'école", "🎒", { q: "Le garçon est allé à l'école", k: "sen" })
+    ],
+    play: "Mime-verbe : l'élève lit une phrase à voix haute puis mime l'action (écrire, ouvrir, s'asseoir). Le parent devine la phrase suivante."
+  },
+  {
+    n: 12, phase: 4, title: "Grand bilan",
+    goal: "Relire les mots les plus importants des leçons 2 à 11 et préparer le petit spectacle de fin.",
+    cards: [],
+    bonus: [],
+    play: "Le petit spectacle : l'élève lit trois phrases devant la famille, qui applaudit. Remise d'un diplôme dessiné à la main."
+  }
+];
+
+/* Leçon 12 : sélection de cartes prises dans les leçons 2 à 11 */
+LESSONS[11].cards = LESSONS.slice(1, 11).flatMap(l => l.cards.filter(x => x.k === "word" || x.k === "sen" || x.k === "num").slice(0, 2));
+
+const PHASES = {
+  1: { name: "Voyelles courtes", hue: "teal" },
+  2: { name: "Voyelles longues et liaisons", hue: "violet" },
+  3: { name: "Signes avancés", hue: "coral" },
+  4: { name: "Phrases et textes", hue: "gold" }
+};
+/* Noyau : état, progression, bandeau de leçons, cartes à retourner */
+const $ = (s, r) => (r || document).querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+let save = { known: {}, stars: {}, older: false };
+try { const r = localStorage.getItem("cartes-alif"); if (r) save = Object.assign(save, JSON.parse(r)); } catch (e) {}
+const persist = () => { try { localStorage.setItem("cartes-alif", JSON.stringify(save)); } catch (e) {} };
+
+const state = { li: 0, mode: "cards", idx: 0, flipped: false };
+const lesson = () => LESSONS[state.li];
+const cardsOf = l => (save.older ? l.cards.concat(l.bonus) : l.cards);
+const knownOf = l => new Set(save.known[l.n] || []);
+const arCls = t => (t.length > 9 ? "ar long" : "ar");
+const starsOf = l => { const s = save.stars[l.n] || {}; return (s.quiz || 0) + (s.memo || 0) + (s.speed || 0); };
+const totalStars = () => LESSONS.reduce((n, l) => n + starsOf(l), 0);
+const starStr = (n, max) => "★".repeat(n) + "☆".repeat(max - n);
+
+function award(game, n) {
+  const l = lesson();
+  save.stars[l.n] = save.stars[l.n] || {};
+  if (n > (save.stars[l.n][game] || 0)) save.stars[l.n][game] = n;
+  persist(); renderChips(); renderTotals();
+}
+
+function speak(t) {
+  try { const u = new SpeechSynthesisUtterance(t); u.lang = "ar-SA"; u.rate = 0.7; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {}
+}
+
+function renderTotals() {
+  const el = $("#total"); if (el) el.textContent = totalStars() + " / " + LESSONS.length * 9;
+}
+
+function renderChips() {
+  $("#chips").innerHTML = LESSONS.map((l, i) =>
+    `<button class="lesson-chip" data-act="lesson" data-i="${i}" data-phase="${l.phase}" ${i === state.li ? 'aria-current="true"' : ""} aria-label="Leçon ${l.n}, ${esc(l.title)}">
+       <b>${l.n}</b><span>${starsOf(l) ? "★ " + starsOf(l) : "Leçon"}</span></button>`).join("");
+}
+
+function renderHead() {
+  const l = lesson();
+  $("#app").dataset.phase = l.phase;
+  $("#head").innerHTML = `<span class="eyebrow">Leçon ${l.n} sur 12 · ${esc(PHASES[l.phase].name)}</span>
+    <h2>${esc(l.title)}</h2><p>${esc(l.goal)}</p>`;
+  $("#older").setAttribute("aria-pressed", save.older ? "true" : "false");
+  $("#tab-cards").setAttribute("aria-selected", state.mode === "cards");
+  $("#tab-games").setAttribute("aria-selected", state.mode === "games");
+}
+
+function renderDeck() {
+  const l = lesson(), cards = cardsOf(l), known = knownOf(l);
+  if (state.idx >= cards.length) state.idx = 0;
+  const c = cards[state.idx];
+  $("#deck").innerHTML = `
+    <div class="scene"><button class="card" id="card" data-act="flip" data-flipped="${state.flipped}" aria-label="Carte ${state.idx + 1} sur ${cards.length}. Touche pour retourner">
+      <span class="face front"><span class="big ${arCls(c.ar)}">${esc(c.ar)}</span><span class="hint">Touche pour retourner</span></span>
+      <span class="face back"><span class="pic">${c.img}</span><span class="tr">${esc(c.tr)}</span><span class="fr">${esc(c.fr)}</span></span>
+    </button></div>
+    <div class="nav">
+      <button class="btn" data-act="prev" aria-label="Carte précédente">←</button>
+      <span class="counter">${state.idx + 1} / ${cards.length}</span>
+      <button class="btn" data-act="next" aria-label="Carte suivante">→</button>
+    </div>
+    <div class="nav">
+      <button class="btn retry" data-act="again">À revoir</button>
+      <button class="btn ok" data-act="know">Je la connais ✓</button>
+      ${window.speechSynthesis ? '<button class="btn" data-act="say">Écouter</button>' : ""}
+      <button class="btn" data-act="shuffle">Mélanger</button>
+    </div>
+    <div class="dots">${cards.map((x, i) => `<button class="dot" data-act="go" data-i="${i}" data-known="${known.has(x.ar)}" ${i === state.idx ? 'aria-current="true"' : ""} aria-label="Aller à la carte ${i + 1}"></button>`).join("")}</div>`;
+}
+
+function renderGrid() {
+  const l = lesson(), cards = cardsOf(l), known = knownOf(l);
+  $("#grid").innerHTML = cards.map((c, i) =>
+    `<button class="mini" data-act="go" data-i="${i}" data-known="${known.has(c.ar)}"><span class="p">${c.img}</span><span class="${arCls(c.ar)}">${esc(c.ar)}</span><small>${esc(c.q)}</small></button>`).join("");
+}
+
+function renderMain() {
+  stopGames();
+  const l = lesson();
+  if (state.mode === "cards") {
+    $("#main").innerHTML = `<div class="deck" id="deck"></div>
+      <h3 class="grid-title">Toutes les cartes de la leçon</h3><div class="grid" id="grid"></div>`;
+    renderDeck(); renderGrid();
+  } else {
+    $("#main").innerHTML = `<div class="games">
+      <section class="game" id="g-quiz" aria-label="Quiz éclair"></section>
+      <section class="game" id="g-memo" aria-label="Jeu de mémoire"></section>
+      <section class="game wide" id="g-speed" aria-label="Lis vite"></section>
+    </div>
+    <section class="offline"><h3>Jeu sans écran</h3><p>${esc(l.play)}</p></section>`;
+    initGames();
+  }
+}
+
+function renderAll() { renderChips(); renderHead(); renderMain(); renderTotals(); }
+
+function move(d) {
+  const n = cardsOf(lesson()).length;
+  state.idx = (state.idx + d + n) % n; state.flipped = false; renderDeck();
+}
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-act]"); if (!t) return;
+  const a = t.dataset.act, l = lesson();
+  if (a === "lesson") { state.li = +t.dataset.i; state.idx = 0; state.flipped = false; renderAll(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  else if (a === "tab") { state.mode = t.dataset.mode; renderHead(); renderMain(); }
+  else if (a === "older") { save.older = !save.older; persist(); state.idx = 0; renderHead(); renderMain(); }
+  else if (a === "flip") { state.flipped = !state.flipped; $("#card").dataset.flipped = state.flipped; }
+  else if (a === "prev") move(-1);
+  else if (a === "next") move(1);
+  else if (a === "go") { state.idx = +t.dataset.i; state.flipped = false; renderDeck(); if (state.mode === "cards") $("#deck").scrollIntoView({ block: "center", behavior: "smooth" }); }
+  else if (a === "shuffle") { const k = cardsOf(l).length; state.idx = Math.floor(Math.random() * k); state.flipped = false; renderDeck(); }
+  else if (a === "say") speak(cardsOf(l)[state.idx].ar);
+  else if (a === "know" || a === "again") {
+    const c = cardsOf(l)[state.idx], set = knownOf(l);
+    if (a === "know") set.add(c.ar); else set.delete(c.ar);
+    save.known[l.n] = Array.from(set); persist(); renderGrid(); move(1);
+  }
+  else gameClick(a, t);
+});
+
+document.addEventListener("keydown", e => {
+  if (state.mode !== "cards" || e.target.closest("input,textarea")) return;
+  if (e.key === "ArrowRight") move(1);
+  if (e.key === "ArrowLeft") move(-1);
+});
+/* Trois jeux par leçon : quiz éclair, mémoire, lis vite */
+let quiz = {}, memo = {}, speed = {};
+
+function stopGames() { if (speed && speed.h) clearInterval(speed.h); speed = {}; }
+
+function initGames() { quizStart(); memoStart(); speedIdle(); }
+
+function gameClick(a, t) {
+  if (a === "q-pick") quizPick(+t.dataset.i);
+  else if (a === "q-restart") quizStart();
+  else if (a === "m-tile") memoTile(+t.dataset.i);
+  else if (a === "m-restart") memoStart();
+  else if (a === "s-start") speedStart();
+  else if (a === "s-ok") speedNext(true);
+  else if (a === "s-skip") speedNext(false);
+  else if (a === "s-hint") { speed.hint = true; renderSpeed(); }
+}
+
+const picStars = (n, max) => `<span class="stars" aria-label="${n} étoiles sur ${max}">${starStr(n, max)}</span>`;
+const bestOf = g => (save.stars[lesson().n] || {})[g] || 0;
+
+/* ---------- 1. Quiz éclair ---------- */
+function buildQ(card, pool) {
+  const dupImg = pool.filter(x => x.img === card.img).length > 1;
+  const dir = card.k !== "syl" && !dupImg && Math.random() < 0.5 ? "img2ar" : "ar2q";
+  const diff = x => x !== card && x.q !== card.q && x.ar !== card.ar;
+  let ds = shuffle(pool.filter(x => diff(x) && x.k === card.k)).slice(0, 3);
+  if (ds.length < 3) ds = ds.concat(shuffle(pool.filter(x => diff(x) && !ds.includes(x))).slice(0, 3 - ds.length));
+  return { card, dir, opts: shuffle([card].concat(ds)) };
+}
+
+function quizStart() {
+  const pool = cardsOf(lesson()), n = Math.min(10, pool.length);
+  quiz = { qs: shuffle(pool).slice(0, n).map(c => buildQ(c, pool)), i: 0, score: 0, locked: false };
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const el = $("#g-quiz"); if (!el) return;
+  const head = `<h3>Quiz éclair ${picStars(bestOf("quiz"), 3)}</h3>`;
+  if (quiz.i >= quiz.qs.length) {
+    const pct = quiz.score / quiz.qs.length, s = pct >= 0.9 ? 3 : pct >= 0.7 ? 2 : pct >= 0.4 ? 1 : 0;
+    award("quiz", s);
+    el.innerHTML = head + `<div class="result"><div class="score">${quiz.score} / ${quiz.qs.length}</div>${picStars(s, 3)}
+      <p>${s === 3 ? "Bravo, parfait !" : s >= 1 ? "Bien joué ! Rejoue pour gagner plus d'étoiles." : "Retourne voir les cartes, puis réessaie."}</p>
+      <button class="btn primary" data-act="q-restart">Rejouer</button></div>`;
+    return;
+  }
+  const q = quiz.qs[quiz.i], c = q.card, letters = c.k === "let";
+  const prompt = q.dir === "ar2q"
+    ? `<div class="prompt ${arCls(c.ar)}">${esc(c.ar)}</div><div class="prompt-label">${letters ? "Quel est le nom de cette lettre ?" : "Que veut dire ce mot ?"}</div>`
+    : `<div class="prompt pic">${c.img}</div><div class="prompt-label">${letters ? "Par quelle lettre commence ce mot ?" : "Quel est le mot en arabe ?"}</div>`;
+  const opts = q.opts.map((o, i) => q.dir === "ar2q"
+    ? `<button class="choice" data-act="q-pick" data-i="${i}">${letters ? "" : `<span class="pic">${o.img}</span>`}<span>${esc(o.q)}</span></button>`
+    : `<button class="choice" data-act="q-pick" data-i="${i}"><span class="${arCls(o.ar)}">${esc(o.ar)}</span></button>`).join("");
+  el.innerHTML = head + `<div class="meter"><i style="width:${(quiz.i / quiz.qs.length) * 100}%"></i></div>
+    <div class="stage">${prompt}<div class="choices">${opts}</div><div class="msg" id="q-msg" aria-live="polite">Question ${quiz.i + 1} sur ${quiz.qs.length}</div></div>`;
+}
+
+function quizPick(i) {
+  if (quiz.locked) return; quiz.locked = true;
+  const q = quiz.qs[quiz.i], ok = q.opts[i] === q.card, btns = document.querySelectorAll("#g-quiz .choice");
+  btns[i].classList.add(ok ? "right" : "wrong");
+  if (!ok) btns[q.opts.indexOf(q.card)].classList.add("right");
+  if (ok) quiz.score++;
+  const m = $("#q-msg"); m.className = "msg " + (ok ? "good" : "bad"); m.textContent = ok ? "Bravo !" : "Presque ! Voici la bonne réponse.";
+  const at = quiz.i;
+  setTimeout(() => { if (quiz.i === at && $("#g-quiz")) { quiz.i++; quiz.locked = false; renderQuiz(); } }, ok ? 800 : 1500);
+}
+
+/* ---------- 2. Mémoire ---------- */
+function memoStart() {
+  const all = cardsOf(lesson());
+  const pool = all.filter(x => x.k !== "syl" && all.filter(y => y.img === x.img).length === 1);
+  const picks = shuffle(pool).slice(0, 6);
+  const tiles = shuffle(picks.flatMap((cd, id) => [{ id, t: "ar", cd }, { id, t: "pic", cd }]));
+  memo = { tiles, open: [], done: new Set(), moves: 0, pairs: picks.length, lock: false };
+  renderMemo();
+}
+
+function renderMemo() {
+  const el = $("#g-memo"); if (!el) return;
+  const head = `<h3>Mémoire ${picStars(bestOf("memo"), 3)}</h3>`;
+  if (memo.done.size === memo.tiles.length) {
+    const s = memo.moves <= memo.pairs + 2 ? 3 : memo.moves <= memo.pairs * 2 ? 2 : 1;
+    award("memo", s);
+    el.innerHTML = head + `<div class="result"><div class="score">${memo.moves} coups</div>${picStars(s, 3)}<p>Toutes les paires sont trouvées !</p><button class="btn primary" data-act="m-restart">Rejouer</button></div>`;
+    return;
+  }
+  const tiles = memo.tiles.map((x, i) => {
+    const shown = memo.open.includes(i) || memo.done.has(i);
+    const inner = !shown ? "?" : x.t === "ar" ? `<span class="${arCls(x.cd.ar)}">${esc(x.cd.ar)}</span>` : `<span class="pic">${x.cd.img}</span>`;
+    return `<button class="tile ${memo.done.has(i) ? "done" : memo.open.includes(i) ? "open" : ""}" data-act="m-tile" data-i="${i}" ${shown ? "" : 'aria-label="Carte cachée"'}>${inner}</button>`;
+  }).join("");
+  el.innerHTML = head + `<p class="how">Associe chaque mot arabe à son image.</p><div class="stage"><div class="memo">${tiles}</div><div class="msg" aria-live="polite">${memo.moves} coups</div></div>`;
+}
+
+function memoTile(i) {
+  if (memo.lock || memo.done.has(i) || memo.open.includes(i)) return;
+  memo.open.push(i);
+  if (memo.open.length === 2) {
+    memo.moves++;
+    const [a, b] = memo.open;
+    if (memo.tiles[a].id === memo.tiles[b].id) { memo.done.add(a); memo.done.add(b); memo.open = []; }
+    else { memo.lock = true; const snap = memo; setTimeout(() => { if (memo === snap) { memo.open = []; memo.lock = false; renderMemo(); } }, 900); }
+  }
+  renderMemo();
+}
+
+/* ---------- 3. Lis vite ---------- */
+function speedIdle() {
+  speed = { state: "idle" }; renderSpeed();
+}
+
+function speedStart() {
+  if (speed.h) clearInterval(speed.h);
+  speed = { state: "run", pool: shuffle(cardsOf(lesson())), i: 0, ok: 0, t: 60, hint: false };
+  speed.h = setInterval(() => {
+    if (!$("#g-speed")) { clearInterval(speed.h); return; }
+    speed.t--; if (speed.t <= 0) { clearInterval(speed.h); speed.state = "end"; }
+    renderSpeed();
+  }, 1000);
+  renderSpeed();
+}
+
+function speedNext(good) {
+  if (speed.state !== "run") return;
+  if (good) speed.ok++;
+  speed.i++; if (speed.i >= speed.pool.length) { speed.pool = shuffle(speed.pool); speed.i = 0; }
+  speed.hint = false; renderSpeed();
+}
+
+function renderSpeed() {
+  const el = $("#g-speed"); if (!el) return;
+  const head = `<h3>Lis vite ! ${picStars(bestOf("speed"), 3)}</h3>`;
+  if (speed.state === "idle") {
+    el.innerHTML = head + `<p class="how">Lis un maximum de mots à voix haute en 60 secondes. L'adulte (ou toi) appuie sur « Bien lu » à chaque mot correct.</p>
+      <div class="row"><button class="btn primary" data-act="s-start">Commencer</button></div>`;
+  } else if (speed.state === "run") {
+    const c = speed.pool[speed.i];
+    el.innerHTML = head + `<div class="stage"><div class="timer" aria-label="${speed.t} secondes">${speed.t} s</div>
+      <div class="prompt ${arCls(c.ar)}">${esc(c.ar)}</div>
+      <div class="msg">${speed.hint ? esc(c.tr) + " · " + esc(c.fr) : "Mots lus : " + speed.ok}</div>
+      <div class="row"><button class="btn ok" data-act="s-ok">Bien lu ✓</button><button class="btn" data-act="s-skip">Passer</button><button class="btn" data-act="s-hint">Indice</button></div></div>`;
+  } else {
+    const s = speed.ok >= 12 ? 3 : speed.ok >= 8 ? 2 : speed.ok >= 4 ? 1 : 0;
+    award("speed", s);
+    el.innerHTML = head + `<div class="result"><div class="score">${speed.ok} mots</div>${picStars(s, 3)}<p>${s === 3 ? "Quelle vitesse !" : "Rejoue pour battre ton score."}</p><button class="btn primary" data-act="s-start">Rejouer</button></div>`;
+  }
+}
+renderAll();
+</script>
+
+</body></html>
